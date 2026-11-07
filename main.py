@@ -34,10 +34,8 @@ class SaveCatsYandexDisc:
         )
         if response.status_code == 201:
             return name_folder
-        
         elif response.status_code == 409:
             return name_folder
-
         else:
             return f'Ошибка создания папки: {response.status_code}'
 
@@ -48,7 +46,7 @@ class SaveCatsYandexDisc:
         },
         headers=self.headers)
         response_json = response.json()
-        file_info = {'name': response_json['name'], 'size': f'{response_json['size']} b.'}
+        file_info = {'name': response_json['name'], 'size': f'{response_json["size"]} b.'}
         file_json = json.dumps(file_info, indent=4)
         self.save_file(name_folder, name_file, 'json', file_json)
 
@@ -63,7 +61,6 @@ class SaveCatsYandexDisc:
 
         if response_put.status_code == 201:
             print('Файл сохранен успешно')
-
         else:
             print(f'Ошибка сохранения файла {response_put.status_code}')   
 
@@ -89,13 +86,10 @@ class SaveCatsYandexDisc:
                 if response_status.json()['status'] == 'success':
                     print(f'Картинка с названием {text} успешно загружена в папку {folder}')
                     break
-
                 elif response_status.json()['status'] == 'in-progress':
                     time.sleep(1)
                     progress_bar.update(1)
-                    continue
-                
-
+                    continue               
                 else:
                     print(f'Не удалось загрузить картинку')
                     break
